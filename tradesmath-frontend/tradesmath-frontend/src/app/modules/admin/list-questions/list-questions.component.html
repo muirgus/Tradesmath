@@ -1,0 +1,166 @@
+<div class="flex flex-col flex-auto min-w-0 list-questions">
+    <!-- Header -->
+    <div class="
+            flex flex-col
+            sm:flex-row
+            flex-0
+            sm:items-center sm:justify-between
+            p-6
+            sm:py-8 sm:px-10
+            border-b
+            bg-card
+            dark:bg-transparent
+        ">
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-primary-500">Admin</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+                    <a class="ml-1 text-primary-500">Questions</a>
+                </div>
+            </div>
+            <!-- Title -->
+            <div class="mt-2">
+                <h2 class="
+                        text-3xl
+                        md:text-4xl
+                        font-extrabold
+                        tracking-tight
+                        leading-7
+                        sm:leading-10
+                    ">
+                    <span *ngIf="!viewQuestionsDetails">View Questions</span>
+                    <span *ngIf="
+                            activeQuestions &&
+                            activeQuestions.length > 0 &&
+                            viewQuestionsDetails
+                        ">Topic Name: {{ activeQuestions[0].topicName }}
+                    </span>
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-auto p-6 sm:p-10" *ngIf="!viewQuestionsDetails">
+        <div class="max-w-full">
+            <div class="flex flex-col overflow-hidden">
+                <div class="flex items-center mt-4 sm:mt-0 md:mt-4 mb-3">
+                    <div class="flex-auto mr-3">
+                        <app-filter *ngIf="showFilter" [data]="questionsList" [columns]="filterColummn"
+                            (outputData)="GetFilteredData($event)"></app-filter>
+                    </div>
+                    <div class="text-left">
+                        <div class="flex justify-end">
+                            <button mat-flat-button [color]="'primary'" class="fuse-mat-button-large mb-2"
+                                (click)="exportData('All')">
+                                <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:save'"></mat-icon>
+                                <span class="ml-2">Download as Excel Sheet</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-4 gap-4 mobile-grid-cols-1">
+                    <div class="
+                            cards-wrapper
+                            bg-card
+                            shadow
+                            rounded-2xl
+                            p-4
+                            cursor-pointer
+                        " *ngFor="let item of getTopicsGroup" (click)="setActiveQuestions(item)">
+                        <div class="mt-4 text-lg font-bold">
+                            {{ item[0].topicName }}
+                        </div>
+                        <div class="mt-4 text-lg font-medium">
+                            {{ item.length }} questions
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10" *ngIf="
+            activeQuestions &&
+            activeQuestions.length > 0 &&
+            viewQuestionsDetails
+        ">
+        <div class="
+                max-w-full
+                bg-card
+                rounded-2xl
+                shadow
+                p-8
+                pb-4
+                overflow-y-auto
+                text-left
+            ">
+            <div class="flex justify-between">
+                <!-- <button
+                    mat-flat-button
+                    [color]="'primary'"
+                    class="fuse-mat-button-large w-50 mb-3"
+                    (click)="viewQuestionsDetails = false"
+                >
+                    Back
+                </button> -->
+                <button mat-flat-button [color]="'primary'" class="fuse-mat-button-large w-50 mb-3"
+                    (click)="exportData('Topic')">
+                    Download
+                </button>
+                <button mat-flat-button [color]="'primary'" class="fuse-mat-button-large w-50 mb-3"
+                    (click)="viewQuestionTemplate()">
+                    Student View
+                </button>
+            </div>
+            <mat-accordion displayMode="flat" multi class="mat-table text-left">
+                <section matSort class="mat-elevation-z2 mat-header-row">
+                    <span class="mat-header-cell text-left" style="width: 10%">No.</span>
+                    <span class="mat-header-cell">Question</span>
+                    <span class="mat-header-cell text-center" style="width: 10%">Action</span>
+                </section>
+
+                <mat-expansion-panel *ngFor="let element of activeQuestions" class="mb-0"
+                    style="border-radius: 0 !important">
+                    <mat-expansion-panel-header class="mat-row">
+                        <span class="mat-cell" style="width: 10%">{{
+                            element.index
+                            }}</span>
+                        <span class="mat-cell" [innerHTML]="element.questionText"></span>
+                        <span class="mat-cell text-center" style="width: 10%">
+                            <mat-icon class="cursor-pointer" svgIcon="heroicons_outline:pencil-alt"
+                                (click)="editQuestions(element)"></mat-icon>
+                            <mat-icon class="cursor-pointer" svgIcon="heroicons_outline:trash"
+                                (click)="deleteQuestions(element)"></mat-icon>
+                        </span>
+                    </mat-expansion-panel-header>
+                    <div>
+                        <p>Equation: {{ element.equation }}</p>
+                        <div class="
+                                grid grid-cols-3
+                                gap-4
+                                mobile-grid-cols-1 mobile-gap-1
+                            ">
+                            <p class="mobile-mb-0">Min 1: {{ element.min1 }}</p>
+                            <p class="mobile-mb-0">Max 1: {{ element.max1 }}</p>
+                            <p class="mobile-mb-0">
+                                Step 1: {{ element.step1 }}
+                            </p>
+                            <p class="mobile-mb-0">Min 2: {{ element.min2 }}</p>
+                            <p class="mobile-mb-0">Max 2: {{ element.max2 }}</p>
+                            <p class="mobile-mb-0">
+                                Step 2: {{ element.step2 }}
+                            </p>
+                        </div>
+                        <p>Last modified on: {{ element.updatedAt | date: 'MM/dd/yyyy' }} {{ element.userName ? 'by ' + element.userName : '' }}</p>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>

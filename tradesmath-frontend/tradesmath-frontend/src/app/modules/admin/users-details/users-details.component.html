@@ -1,0 +1,135 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div
+        class="
+            flex flex-col
+            sm:flex-row
+            flex-0
+            sm:items-center sm:justify-between
+            p-6
+            sm:py-8 sm:px-10
+            border-b
+            bg-card
+            dark:bg-transparent
+        "
+    >
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-primary-500">Admin</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_solid:chevron-right'"
+                    ></mat-icon>
+                    <a class="ml-1 text-primary-500">Users</a>
+                </div>
+            </div>
+            <!-- Title -->
+            <div class="mt-2">
+                <h2
+                    class="
+                        text-3xl
+                        md:text-4xl
+                        font-extrabold
+                        tracking-tight
+                        leading-7
+                        sm:leading-10
+                        truncate
+                    "
+                >
+                    Update Users
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="max-w-full">
+            <form
+                [formGroup]="usersForm"
+                #usersNgForm="ngForm"
+                class="
+                    flex flex-col
+                    mt-0
+                    p-8
+                    pb-4
+                    bg-card
+                    rounded-2xl
+                    shadow
+                    overflow-hidden
+                "
+            >
+                <div class="flex flex-col gt-xs:flex-row">
+                    <div class="grid grid-cols-2 gap-4 mobile-grid-cols-1">
+                        <mat-form-field>
+                            <mat-label>First Name</mat-label>
+                            <input matInput [formControlName]="'firstName'" />
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Last Name</mat-label>
+                            <input matInput [formControlName]="'lastName'" />
+                        </mat-form-field>
+                    </div>
+                    <mat-form-field>
+                        <mat-label>Email</mat-label>
+                        <input matInput [formControlName]="'email'" />
+                    </mat-form-field>
+                    <div class="grid grid-cols-3 gap-4 mobile-grid-cols-1">
+                        <mat-checkbox
+                            class="mb-2"
+                            [formControlName]="'isAdmin'"
+                            [color]="'primary'"
+                        >
+                            Is Admin
+                        </mat-checkbox>
+                        <mat-checkbox
+                            class="mb-2"
+                            [formControlName]="'isSuperAdmin'"
+                            [color]="'primary'"
+                        >
+                            Is Super Admin
+                        </mat-checkbox>
+                        <mat-checkbox
+                            class="mb-2"
+                            [formControlName]="'isActive'"
+                            [color]="'primary'"
+                        >
+                            Is Active
+                        </mat-checkbox>
+                    </div>
+                </div>
+                <div class="flex gt-xs:flex-row justify-center">
+                    <button
+                        class="fuse-mat-button-large w-50 mt-6"
+                        mat-flat-button
+                        [disabled]="usersForm.disabled"
+                        (click)="saveUsersDetails()"
+                        [color]="'primary'"
+                    >
+                        <span *ngIf="!usersForm.disabled">Update Users </span>
+
+                        <mat-progress-spinner
+                            *ngIf="usersForm.disabled"
+                            [diameter]="24"
+                            [mode]="'indeterminate'"
+                        >
+                        </mat-progress-spinner>
+                    </button>
+                    <button
+                        class="fuse-mat-button-large w-50 mt-6 ml-5"
+                        mat-flat-button
+                        [disabled]="usersForm.disabled"
+                        (click)="cancel()"
+                        [color]="'primary'"
+                    >
+                        <span>Cancel</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

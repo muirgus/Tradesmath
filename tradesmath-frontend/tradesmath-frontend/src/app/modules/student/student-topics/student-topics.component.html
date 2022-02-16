@@ -1,0 +1,158 @@
+<div class="flex flex-col flex-auto min-w-0 student-topics">
+    <div
+        class="
+            flex flex-col
+            sm:flex-row
+            flex-0
+            sm:items-center sm:justify-between
+            p-6
+            sm:py-8 sm:px-10
+            border-b
+            bg-card
+            dark:bg-transparent
+        "
+    >
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-primary-500">Students</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_solid:chevron-right'"
+                    ></mat-icon>
+                    <a class="ml-1 text-primary-500">Topics</a>
+                </div>
+            </div>
+            <div class="mt-2" *ngIf="lastAnswerGiven">
+                <h2
+                    class="
+                        text-3xl
+                        md:text-3xl
+                        font-extrabold
+                        tracking-tight
+                        leading-7
+                        sm:leading-10
+                    "
+                >
+                    Last Assessment taken: {{ lastAnswerGiven.topicName }}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-auto p-6 sm:p-10" *ngIf="isGridView">
+        <div
+            class="
+                max-w-full
+                bg-card
+                rounded-2xl
+                shadow
+                p-8
+                pb-4
+                overflow-y-auto
+            "
+        >
+            <div>
+                <app-filter
+                    *ngIf="showFilter"
+                    [data]="topicsList"
+                    [columns]="filterColummn"
+                    (outputData)="getFilteredData($event)"
+                ></app-filter>
+            </div>
+            <table
+                class="overflow-y-visible w-full"
+                mat-table
+                [dataSource]="studentTopicDataList"
+            >
+                <ng-container matColumnDef="key">
+                    <th mat-header-cell *matHeaderCellDef style="width: 10%">
+                        Action
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let element"
+                        class="break-all"
+                        style="width: 10%"
+                    >
+                        <mat-icon
+                            (click)="setActiveQuestions(element, false)"
+                            class="cursor-pointer"
+                            svgIcon="heroicons_outline:eye"
+                        ></mat-icon>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="topicName">
+                    <th mat-header-cell *matHeaderCellDef style="width: 40%">
+                        Topic Name
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let element"
+                        style="width: 40%"
+                        class="break-words"
+                    >
+                        {{ element.topicName }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="index">
+                    <th mat-header-cell *matHeaderCellDef style="width: 10%">
+                        No.
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let element"
+                        class="break-all"
+                        style="width: 10%"
+                    >
+                        {{ element.index }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="questionsCount">
+                    <th mat-header-cell *matHeaderCellDef style="width: 10%">
+                        Questions
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let element"
+                        class="break-all"
+                        style="width: 10%"
+                    >
+                        {{ element.questionsCount }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="finalScore">
+                    <th mat-header-cell *matHeaderCellDef style="width: 10%">
+                        Score
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let element"
+                        class="break-all"
+                        style="width: 10%"
+                    >
+                        <div
+                            [ngClass]="
+                                element.finalScore < 80
+                                    ? 'score'
+                                    : 'green-score'
+                            "
+                        >
+                            {{ element.finalScore }}%
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                    mat-row
+                    *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+            </table>
+        </div>
+    </div>
+</div>

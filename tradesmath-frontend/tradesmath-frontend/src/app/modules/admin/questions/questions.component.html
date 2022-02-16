@@ -1,0 +1,225 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div
+        class="
+            flex flex-col
+            sm:flex-row
+            flex-0
+            sm:items-center sm:justify-between
+            p-6
+            sm:py-8 sm:px-10
+            border-b
+            bg-card
+            dark:bg-transparent
+        "
+    >
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-primary-500">Admin</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_solid:chevron-right'"
+                    ></mat-icon>
+                    <a class="ml-1 text-primary-500">Questions</a>
+                </div>
+            </div>
+            <!-- Title -->
+            <div class="mt-2">
+                <h2
+                    class="
+                        text-3xl
+                        md:text-4xl
+                        font-extrabold
+                        tracking-tight
+                        leading-7
+                        sm:leading-10
+                        truncate
+                    "
+                >
+                    {{ editKey ? "Update" : "Create" }} Questions
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="max-w-full">
+            <form
+                [formGroup]="questionsForm"
+                #topicsNgForm="ngForm"
+                class="
+                    flex flex-col
+                    mt-0
+                    p-8
+                    pb-4
+                    bg-card
+                    rounded-2xl
+                    shadow
+                    overflow-hidden
+                "
+            >
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Select Topic</mat-label>
+                        <mat-select [formControlName]="'topicId'">
+                            <mat-option value=""
+                                >Select the topic for question</mat-option
+                            >
+                            <mat-option
+                                [value]="item.key"
+                                *ngFor="let item of topicsList"
+                            >
+                                {{ item.topicName }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Question Text</mat-label>
+                        <textarea
+                            matInput
+                            [formControlName]="'questionText'"
+                        ></textarea>
+                    </mat-form-field>
+                    <mat-form-field class="flex-auto gt-xs:pl-3">
+                        <mat-label>Equation</mat-label>
+                        <input matInput [formControlName]="'equation'" />
+                    </mat-form-field>
+                    <div class="grid grid-cols-3 gap-4 mobile-grid-cols-1">
+                        <mat-form-field>
+                            <mat-label>Minimum 1</mat-label>
+                            <input matInput [formControlName]="'min1'" />
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Maximum 1</mat-label>
+                            <input matInput [formControlName]="'max1'" />
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Step 1</mat-label>
+                            <input matInput [formControlName]="'step1'" />
+                        </mat-form-field>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4 mobile-grid-cols-1">
+                        <mat-form-field>
+                            <mat-label>Minimum 2</mat-label>
+                            <input matInput [formControlName]="'min2'" />
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Maximum 2</mat-label>
+                            <input matInput [formControlName]="'max2'" />
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Step 2</mat-label>
+                            <input matInput [formControlName]="'step2'" />
+                        </mat-form-field>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mobile-grid-cols-1">
+                        <mat-form-field>
+                            <mat-label>Image Link</mat-label>
+                            <input matInput [formControlName]="'imageLink'" />
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Video Link</mat-label>
+                            <input matInput [formControlName]="'videoLink'" />
+                        </mat-form-field>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mobile-grid-cols-1">
+                        <!-- <input
+                            type="file"
+                            #fileInput
+                            id="uploadFile"
+                            name="uploadFile"
+                            multiple="multiple"
+                            accept="image/*"
+                            (change)="onFileSelected($event)"
+                        /> -->
+
+                        <div class="mt-4 sm:mt-0">
+                            <!-- Upload button -->
+
+                            <div>
+                                <input
+                                    id="image-file-input"
+                                    class="
+                                        absolute
+                                        h-0
+                                        w-0
+                                        opacity-0
+                                        invisible
+                                        pointer-events-none
+                                    "
+                                    type="file"
+                                    [multiple]="false"
+                                    #imageFileInput
+                                    (change)="
+                                        onFileSelected($event.target.files)
+                                    "
+                                />
+
+                                <label
+                                    style="background-color: gainsboro"
+                                    class="
+                                        flex
+                                        items-center
+                                        justify-center
+                                        w-40
+                                        h-10
+                                        rounded-full
+                                        cursor-pointer
+                                        hover:bg-gray-400 hover:bg-opacity-20
+                                        dark:hover:bg-black
+                                        dark:hover:bg-opacity-5
+                                    "
+                                    for="image-file-input"
+                                    matRipple
+                                >
+                                    <mat-icon
+                                        [svgIcon]="
+                                            'heroicons_outline:photograph'
+                                        "
+                                    ></mat-icon
+                                    ><span class="ml-2 mr-1">Upload file</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="wrap-uploaded-image" *ngIf="imageBaseData">
+                            <img
+                                [src]="imageBaseData"
+                                style="
+                                    width: 200px;
+                                    height: 200px;
+                                    object-fit: cover;
+                                "
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col gt-xs:flex-row items-center">
+                    <button
+                        class="fuse-mat-button-large w-50 mt-6"
+                        mat-flat-button
+                        [disabled]="questionsForm.disabled"
+                        (click)="saveQuestions()"
+                        [color]="'primary'"
+                    >
+                        <span *ngIf="!questionsForm.disabled"
+                            >{{
+                                editKey ? "Update Question" : "Create Question"
+                            }}
+                        </span>
+                        <mat-progress-spinner
+                            *ngIf="questionsForm.disabled"
+                            [diameter]="24"
+                            [mode]="'indeterminate'"
+                        >
+                        </mat-progress-spinner>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

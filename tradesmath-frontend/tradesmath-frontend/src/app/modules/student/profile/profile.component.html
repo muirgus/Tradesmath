@@ -1,0 +1,183 @@
+<div class="flex flex-col flex-auto min-w-0 student-topics">
+    <div
+        class="
+            flex flex-col
+            sm:flex-row
+            flex-0
+            sm:items-center sm:justify-between
+            p-6
+            sm:py-8 sm:px-10
+            border-b
+            bg-card
+            dark:bg-transparent
+        "
+    >
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a
+                        class="whitespace-nowrap text-primary-500"
+                        *ngIf="loginUser.isAdmin || loginUser.isSuperAdmin"
+                        >Admin</a
+                    >
+                    <a
+                        class="whitespace-nowrap text-primary-500"
+                        *ngIf="!(loginUser.isAdmin || loginUser.isSuperAdmin)"
+                        >Student</a
+                    >
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_solid:chevron-right'"
+                    ></mat-icon>
+                    <a class="ml-1 text-primary-500">Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex-auto p-6 sm:p-10">
+        <form
+            class="
+                max-w-full
+                bg-card
+                rounded-2xl
+                shadow
+                p-8
+                pb-4
+                overflow-y-auto
+            "
+            [formGroup]="profileForm"
+            #profileNgForm="ngForm"
+        >
+            <div class="flex flex-col gt-xs:flex-row">
+                <mat-form-field class="w-full" [floatLabel]="'always'">
+                    <mat-label>First name</mat-label>
+                    <input
+                        matInput
+                        [placeholder]="'First Name'"
+                        [formControlName]="'firstName'"
+                    />
+                    <mat-icon
+                        class="icon-size-5"
+                        matSuffix
+                        [svgIcon]="'heroicons_solid:user-circle'"
+                    ></mat-icon>
+                    <mat-error
+                        *ngIf="
+                            profileForm.get('firstName').hasError('required')
+                        "
+                    >
+                        First name is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-full" [floatLabel]="'always'">
+                    <mat-label>Last name</mat-label>
+                    <input
+                        matInput
+                        [placeholder]="'Last Name'"
+                        [formControlName]="'lastName'"
+                    />
+                    <mat-icon
+                        class="icon-size-5"
+                        matSuffix
+                        [svgIcon]="'heroicons_solid:user-circle'"
+                    ></mat-icon>
+                    <mat-error
+                        *ngIf="profileForm.get('lastName').hasError('required')"
+                    >
+                        Last name is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="flex">
+                <mat-form-field class="w-full" [floatLabel]="'always'">
+                    <mat-label>Email</mat-label>
+                    <input
+                        matInput
+                        [placeholder]="'Email'"
+                        [formControlName]="'email'"
+                        readonly
+                    />
+                    <!-- <mat-icon
+                        class="icon-size-5"
+                        matSuffix
+                        [svgIcon]="'heroicons_solid:location-marker'"></mat-icon> -->
+                </mat-form-field>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mobile-grid-cols-1">
+                <!-- <input
+                            type="file"
+                            #fileInput
+                            id="uploadFile"
+                            name="uploadFile"
+                            multiple="multiple"
+                            accept="image/*"
+                            (change)="onFileSelected($event)"
+                        /> -->
+
+                <div class="mt-4 sm:mt-0">
+                    <!-- Upload button -->
+
+                    <div>
+                        <input
+                            id="image-file-input"
+                            class="
+                                absolute
+                                h-0
+                                w-0
+                                opacity-0
+                                invisible
+                                pointer-events-none
+                            "
+                            type="file"
+                            [multiple]="false"
+                            #imageFileInput
+                            (change)="onFileSelected($event.target.files)"
+                        />
+
+                        <label
+                            style="background-color: gainsboro"
+                            class="
+                                flex
+                                items-center
+                                justify-center
+                                w-40
+                                h-10
+                                rounded-full
+                                cursor-pointer
+                                hover:bg-gray-400 hover:bg-opacity-20
+                                dark:hover:bg-black dark:hover:bg-opacity-5
+                            "
+                            for="image-file-input"
+                            matRipple
+                        >
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:photograph'"
+                            ></mat-icon
+                            ><span class="ml-2 mr-1">Upload file</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="wrap-uploaded-image" *ngIf="imageBaseData">
+                    <img
+                        [src]="imageBaseData"
+                        style="width: 200px; height: 200px; object-fit: cover"
+                    />
+                </div>
+            </div>
+            <div class="flex justify-end flex-row">
+                <button
+                    mat-flat-button
+                    [disabled]="profileForm.disabled"
+                    [color]="'primary'"
+                    class="fuse-mat-button-large w-50 mb-3 float-right"
+                    (click)="updatePtofile()"
+                >
+                    Update
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

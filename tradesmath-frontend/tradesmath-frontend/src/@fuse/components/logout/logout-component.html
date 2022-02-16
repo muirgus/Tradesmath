@@ -1,0 +1,13 @@
+<!-- Button -->
+<button
+    mat-icon-button
+    [matTooltip]="tooltip || 'Logout User'"
+    (click)="logoutUser()"
+>
+    <ng-container [ngTemplateOutlet]="iconTpl || defaultIconTpl"></ng-container>
+</button>
+
+<!-- Default icon -->
+<ng-template #defaultIconTpl>
+    <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+</ng-template>

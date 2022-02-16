@@ -1,0 +1,166 @@
+<div class="flex flex-col flex-auto min-w-0 student-score">
+    <div
+        class="
+            flex flex-col
+            sm:flex-row
+            flex-0
+            sm:items-center sm:justify-between
+            p-6
+            sm:py-8 sm:px-10
+            border-b
+            bg-card
+            dark:bg-transparent
+        "
+    >
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-primary-500">Students</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_solid:chevron-right'"
+                    ></mat-icon>
+                    <a class="ml-1 text-primary-500">Practice Questions</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_solid:chevron-right'"
+                    ></mat-icon>
+                    <a class="ml-1 text-primary-500">Question Score</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="flex justify-center max-w-6xl">
+            <div
+                class="
+                    flex
+                    justify-center
+                    w-80
+                    bg-card
+                    shadow
+                    overflow-hidden
+                    mb-8
+                "
+            >
+                <div class="flex justify-center">
+                    <circle-progress
+                        [percent]="100"
+                        [radius]="50"
+                        [outerStrokeWidth]="10"
+                        [outerStrokeColor]="'#78C000'"
+                        [animation]="true"
+                        [animationDuration]="300"
+                        [showInnerStroke]="false"
+                        class="w-40 h-40"
+                        title="Your Score"
+                        [subtitle]="subtitle"
+                        [subtitleFontSize]="18"
+                        [titleFontSize]="15"
+                        [showUnits]="false"
+                        [animateTitle]="true"
+                    ></circle-progress>
+                </div>
+            </div>
+        </div>
+        <div
+            class="
+                max-w-6xl
+                p-4
+                bg-card
+                shadow
+                rounded
+                overflow-hidden
+                status-grid
+            "
+        >
+            <table>
+                <div
+                    *ngFor="let item of questiondata; let i = index"
+                    class="py-2"
+                    [ngClass]="i < questiondata.length - 1 ? 'border-b' : ''"
+                >
+                    <tr class="my-3">
+                        <th class="text-left">Question</th>
+                        <td>
+                            <div [appMath]="item.question"></div>
+                        </td>
+                    </tr>
+                    <tr class="my-3">
+                        <th class="text-left">Correct Answer</th>
+                        <td>
+                            <div>{{ item.correctanswer }}</div>
+                        </td>
+                    </tr>
+                    <tr class="my-3">
+                        <th class="text-left">Your Answer</th>
+                        <td>
+                            <div
+                                [ngClass]="{
+                                    'text-red-600': !isAnswerCorrect(
+                                        item.answer,
+                                        item.correctanswer
+                                    ),
+                                    'text-green-600': isAnswerCorrect(
+                                        item.answer,
+                                        item.correctanswer
+                                    )
+                                }"
+                            >
+                                {{ item.answer }}
+                            </div>
+                        </td>
+                    </tr>
+                </div>
+            </table>
+            <div class="text-right">
+                <button
+                    class="px-8 mx-1"
+                    mat-flat-button
+                    [color]="'primary'"
+                    type="button"
+                    (click)="prevExam()"
+                    *ngIf="isPrevTopic"
+                >
+                    Prev Topic
+                </button>
+                <button
+                    class="px-8 mx-1"
+                    mat-flat-button
+                    [color]="'primary'"
+                    type="button"
+                    (click)="retakeExam()"
+                    *ngIf="counter <= 4"
+                >
+                    Retake
+                </button>
+                <button
+                    class="px-8 mx-1"
+                    mat-flat-button
+                    [color]="'primary'"
+                    type="button"
+                    (click)="nextExam()"
+                    *ngIf="isNextTopic"
+                >
+                    Next Topic
+                </button>
+                <button
+                    class="px-8 mx-1"
+                    mat-flat-button
+                    [color]="'primary'"
+                    type="button"
+                    (click)="goToHome()"
+                    *ngIf="!isNextTopic"
+                >
+                    Home
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

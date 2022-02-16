@@ -1,0 +1,343 @@
+<div class="flex flex-col flex-auto min-w-0 student-topics">
+    <div class="flex-auto p-6 sm:p-10">
+        <div
+            class="
+                grid grid-cols-1
+                sm:grid-cols-2
+                md:grid-cols-5
+                gap-6
+                w-full
+                min-w-0
+            "
+        >
+            <div
+                class="
+                    flex flex-col flex-auto
+                    p-6
+                    bg-card
+                    shadow
+                    rounded-2xl
+                    overflow-hidden
+                "
+            >
+                <div class="flex items-start justify-center">
+                    <div
+                        class="
+                            text-lg
+                            font-medium
+                            tracking-tight
+                            leading-6
+                            truncate
+                            text-center
+                        "
+                    >
+                        Total Topics
+                    </div>
+                </div>
+                <div class="flex flex-col items-center mt-2">
+                    <div
+                        class="
+                            text-7xl
+                            sm:text-8xl
+                            font-bold
+                            tracking-tight
+                            leading-none
+                        "
+                        [style.color]="answersColor[0]"
+                    >
+                        {{ countInfo.topicsCount }}
+                    </div>
+                </div>
+            </div>
+            <div
+                class="
+                    flex flex-col flex-auto
+                    p-6
+                    bg-card
+                    shadow
+                    rounded-2xl
+                    overflow-hidden
+                "
+            >
+                <div class="flex items-start justify-center">
+                    <div
+                        class="
+                            text-lg
+                            font-medium
+                            tracking-tight
+                            leading-6
+                            truncate
+                            text-center
+                        "
+                    >
+                        Total Questions
+                    </div>
+                </div>
+                <div class="flex flex-col items-center mt-2">
+                    <div
+                        class="
+                            text-7xl
+                            sm:text-8xl
+                            font-bold
+                            tracking-tight
+                            leading-none
+                        "
+                        [style.color]="answersColor[1]"
+                    >
+                        {{ countInfo.questionsCount }}
+                    </div>
+                </div>
+            </div>
+            <div
+                class="
+                    flex flex-col flex-auto
+                    p-6
+                    bg-card
+                    shadow
+                    rounded-2xl
+                    overflow-hidden
+                "
+            >
+                <div class="flex items-start justify-center">
+                    <div
+                        class="
+                            text-lg
+                            font-medium
+                            tracking-tight
+                            leading-6
+                            truncate
+                            text-center
+                        "
+                    >
+                        Total Super Admins
+                    </div>
+                </div>
+                <div class="flex flex-col items-center mt-2">
+                    <div
+                        class="
+                            text-7xl
+                            sm:text-8xl
+                            font-bold
+                            tracking-tight
+                            leading-none
+                        "
+                        [style.color]="answersColor[2]"
+                    >
+                        {{ countInfo.superAdminCount }}
+                    </div>
+                </div>
+            </div>
+            <div
+                class="
+                    flex flex-col flex-auto
+                    p-6
+                    bg-card
+                    shadow
+                    rounded-2xl
+                    overflow-hidden
+                "
+            >
+                <div class="flex items-start justify-center">
+                    <div
+                        class="
+                            text-lg
+                            font-medium
+                            tracking-tight
+                            leading-6
+                            truncate
+                            text-center
+                        "
+                    >
+                        Total Admins
+                    </div>
+                </div>
+                <div class="flex flex-col items-center mt-2">
+                    <div
+                        class="
+                            text-7xl
+                            sm:text-8xl
+                            font-bold
+                            tracking-tight
+                            leading-none
+                        "
+                        [style.color]="answersColor[3]"
+                    >
+                        {{ countInfo.adminCount }}
+                    </div>
+                </div>
+            </div>
+            <div
+                class="
+                    flex flex-col flex-auto
+                    p-6
+                    bg-card
+                    shadow
+                    rounded-2xl
+                    overflow-hidden
+                "
+            >
+                <div class="flex items-start justify-center">
+                    <div
+                        class="
+                            text-lg
+                            font-medium
+                            tracking-tight
+                            leading-6
+                            truncate
+                            text-center
+                        "
+                    >
+                        Total Students
+                    </div>
+                </div>
+                <div class="flex flex-col items-center mt-2">
+                    <div
+                        class="
+                            text-7xl
+                            sm:text-8xl
+                            font-bold
+                            tracking-tight
+                            leading-none
+                        "
+                        [style.color]="answersColor[4]"
+                    >
+                        {{ countInfo.usersCount }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div
+            class="
+                grid grid-cols-1
+                sm:grid-cols-1
+                md:grid-cols-2
+                gap-6
+                w-full
+                my-4
+                min-w-0
+            "
+        >
+            <div
+                class="
+                    flex flex-col flex-auto
+                    p-6
+                    bg-card
+                    shadow
+                    rounded-2xl
+                    overflow-hidden
+                "
+            >
+                <div
+                    class="
+                        flex flex-col
+                        sm:flex-row
+                        items-start
+                        justify-between
+                    "
+                >
+                    <div class="text-lg font-medium tracking-tight leading-6">
+                        Total questions generated
+                    </div>
+                    <div
+                        class="
+                            text-lg
+                            font-medium
+                            tracking-tight
+                            leading-6
+                            truncate
+                            flex
+                        "
+                    >
+                        <mat-form-field appearance="fill" class="w-72 sm:w-64">
+                            <mat-date-range-input
+                                [formGroup]="range"
+                                [rangePicker]="picker"
+                            >
+                                <input
+                                    matStartDate
+                                    formControlName="start"
+                                    placeholder="Start date"
+                                />
+                                <input
+                                    matEndDate
+                                    formControlName="end"
+                                    placeholder="End date"
+                                />
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle
+                                matSuffix
+                                [for]="picker"
+                            ></mat-datepicker-toggle>
+                            <mat-date-range-picker
+                                #picker
+                            ></mat-date-range-picker>
+                        </mat-form-field>
+                        <button
+                            mat-flat-button
+                            [color]="'primary'"
+                            class="fuse-mat-button-large mb-0 ml-2"
+                            (click)="getQuestionAnalytics()"
+                        >
+                            <span>Apply</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w-full mt-8 sm:mt-4" *ngIf="isDataLoaded.questions">
+                    <div class="flex flex-col flex-auto">
+                        <div class="flex flex-col flex-auto">
+                            <highcharts-chart
+                                [Highcharts]="Highcharts"
+                                [options]="lineChart"
+                            ></highcharts-chart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="
+                    flex flex-col flex-auto
+                    p-6
+                    bg-card
+                    shadow
+                    rounded-2xl
+                    overflow-hidden
+                "
+            >
+                <div
+                    class="
+                        flex flex-col
+                        sm:flex-row
+                        items-start
+                        justify-between
+                    "
+                >
+                    <div
+                        class="
+                            text-lg
+                            font-medium
+                            tracking-tight
+                            leading-6
+                            truncate
+                        "
+                    >
+                        Top wrongly answered questions
+                    </div>
+                </div>
+                <div class="w-full mt-8 sm:mt-4">
+                    <div class="flex flex-col flex-auto">
+                        <div
+                            class="flex flex-col flex-auto"
+                            *ngIf="isDataLoaded.wrongAnswer"
+                        >
+                            <highcharts-chart
+                                [Highcharts]="Highcharts"
+                                [options]="wrongAnswers"
+                            ></highcharts-chart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

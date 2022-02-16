@@ -1,0 +1,98 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="
+            flex flex-col
+            sm:flex-row
+            flex-0
+            sm:items-center sm:justify-between
+            p-6
+            sm:py-8 sm:px-10
+            border-b
+            bg-card
+            dark:bg-transparent
+        ">
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-primary-500">Admin</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+                    <a class="ml-1 text-primary-500">Topics</a>
+                </div>
+            </div>
+            <!-- Title -->
+            <div class="mt-2">
+                <h2 class="
+                        text-3xl
+                        md:text-4xl
+                        font-extrabold
+                        tracking-tight
+                        leading-7
+                        sm:leading-10
+                        truncate
+                    ">
+                    {{ editKey ? "Update" : "Create" }} Topics
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="max-w-full">
+            <form [formGroup]="topicsForm" #topicsNgForm="ngForm" class="
+                    flex flex-col
+                    mt-0
+                    p-8
+                    pb-4
+                    bg-card
+                    rounded-2xl
+                    shadow
+                    overflow-hidden
+                ">
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Topic name</mat-label>
+                        <input matInput [formControlName]="'topicName'" />
+                    </mat-form-field>
+                    <mat-form-field class="flex-auto gt-xs:pl-3">
+                        <mat-label>Topic Material</mat-label>
+                        <input matInput [formControlName]="'topicMaterial'" />
+                    </mat-form-field>
+                    <mat-form-field class="flex-auto gt-xs:pl-3" appearance="fill">
+                        <mat-label>Next Topics</mat-label>
+                        <mat-select [formControlName]="'nextTopics'" multiple>
+                            <mat-option [value]="item.key" *ngFor="let item of topicsList">
+                                {{ item.topicName }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="flex-auto gt-xs:pl-3" appearance="fill">
+                        <mat-label>Previous Topics</mat-label>
+                        <mat-select [formControlName]="'prevTopics'" multiple>
+                            <mat-option [value]="item.key" *ngFor="let item of topicsList">
+                                {{ item.topicName }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-label>Topic Status</mat-label>
+                    <mat-slide-toggle [formControlName]="'isActive'" [color]="'primary'">
+                        <!-- {{selectedProductForm.get('active').value === true ? 'Active' : 'Disabled'}} -->
+                    </mat-slide-toggle>
+                </div>
+                <div class="flex flex-col gt-xs:flex-row items-center">
+                    <button class="fuse-mat-button-large w-50 mt-6" mat-flat-button [disabled]="topicsForm.disabled"
+                        [color]="'primary'" (click)="saveTopics()">
+                        <span *ngIf="!topicsForm.disabled">
+                            {{ editKey ? "Update Topic" : "Create Topic" }}
+                        </span>
+                        <mat-progress-spinner *ngIf="topicsForm.disabled" [diameter]="24" [mode]="'indeterminate'">
+                        </mat-progress-spinner>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

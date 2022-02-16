@@ -1,0 +1,210 @@
+<div class="flex flex-col flex-auto min-w-0 student-topics">
+    <div
+        class="
+            flex flex-col
+            sm:flex-row
+            flex-0
+            sm:items-center sm:justify-between
+            p-6
+            sm:py-8 sm:px-10
+            border-b
+            bg-card
+            dark:bg-transparent
+        "
+    >
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-primary-500">Students</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_solid:chevron-right'"
+                    ></mat-icon>
+                    <a class="ml-1 text-primary-500">Topics</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-auto p-6 sm:p-10" *ngIf="activeTopic">
+        <div class="flex justify-between">
+            <h2
+                class="
+                    text-3xl
+                    md:text-4xl
+                    font-extrabold
+                    tracking-tight
+                    leading-7
+                    sm:leading-10
+                "
+            >
+                Current Topic
+            </h2>
+            <!-- <button
+                mat-flat-button
+                [color]="'primary'"
+                class="fuse-mat-button-large w-50 mb-3"
+                (click)="resetToInitial()"
+            >
+                Reset Topics
+            </button> -->
+        </div>
+        <div class="max-w-full">
+            <div class="flex flex-col overflow-hidden">
+                <div class="grid grid-cols-3 gap-4 mobile-grid-cols-1">
+                    <div
+                        class="
+                            cards-wrapper
+                            custom-current-topic
+                            shadow
+                            text-white
+                            rounded-2xl
+                            p-4
+                            cursor-pointer
+                        "
+                    >
+                        <div
+                            class="
+                                mt-4
+                                text-lg
+                                font-bold
+                                text-center text-white
+                            "
+                        >
+                            {{ activeTopic.topicName }}
+                        </div>
+                        <div
+                            class="
+                                mt-4
+                                rounded-full
+                                py-1
+                                bg-white
+                                text-center text-lg
+                                font-medium
+                                break-words
+                            "
+                        >
+                            <a class="text-black" (click)="navigateToTopic()"
+                                >Take assessment</a
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="flex flex-col overflow-hidden mt-5"
+                *ngIf="nextTopics.length > 0"
+            >
+                <h5
+                    class="
+                        md:text-2xl
+                        font-extrabold
+                        tracking-tight
+                        leading-7
+                        sm:leading-10
+                    "
+                >
+                    Next Topic
+                </h5>
+                <div class="grid grid-cols-3 gap-4 mobile-grid-cols-1">
+                    <div
+                        class="
+                            cards-wrapper
+                            custom-next-topic
+                            shadow
+                            text-white
+                            rounded-2xl
+                            p-4
+                            cursor-pointer
+                        "
+                        *ngFor="let item of nextTopics"
+                    >
+                        <div
+                            class="
+                                mt-4
+                                text-lg
+                                font-bold
+                                text-center text-white
+                            "
+                        >
+                            {{ item.topicName }}
+                        </div>
+                        <div
+                            class="
+                                mt-4
+                                text-lg
+                                rounded-full
+                                py-1
+                                bg-white
+                                text-center
+                                font-medium
+                                break-words
+                            "
+                        >
+                            <a
+                                class="text-black"
+                                (click)="setActiveQuestions(item)"
+                                >Set as current topic</a
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="flex flex-col overflow-hidden mt-5"
+                *ngIf="prevTopics.length > 0"
+            >
+                <h5
+                    class="
+                        md:text-2xl
+                        font-extrabold
+                        tracking-tight
+                        leading-7
+                        sm:leading-10
+                    "
+                >
+                    Prev Topic
+                </h5>
+                <div class="grid grid-cols-3 gap-4 mobile-grid-cols-1">
+                    <div
+                        class="
+                            cards-wrapper
+                            custom-previous-topic
+                            text-white
+                            shadow
+                            rounded-2xl
+                            p-4
+                            cursor-pointer
+                        "
+                        *ngFor="let item of prevTopics"
+                    >
+                        <div class="mt-4 text-lg text-center font-bold">
+                            {{ item.topicName }}
+                        </div>
+                        <div
+                            class="
+                                mt-4
+                                text-lg
+                                rounded-full
+                                py-1
+                                bg-white
+                                text-center
+                                font-medium
+                                break-words
+                            "
+                        >
+                            <a
+                                class="text-black"
+                                (click)="setActiveQuestions(item)"
+                                >Set as current topic</a
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

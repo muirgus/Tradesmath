@@ -1,0 +1,156 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div
+        class="
+            flex flex-col
+            sm:flex-row
+            flex-0
+            sm:items-center sm:justify-between
+            p-6
+            sm:py-8 sm:px-10
+            border-b
+            bg-card
+            dark:bg-transparent
+        "
+    >
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-primary-500">Admin</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_solid:chevron-right'"
+                    ></mat-icon>
+                    <a class="ml-1 text-primary-500">Users</a>
+                </div>
+            </div>
+            <!-- Title -->
+            <div class="mt-2">
+                <h2
+                    class="
+                        text-3xl
+                        md:text-4xl
+                        font-extrabold
+                        tracking-tight
+                        leading-7
+                        sm:leading-10
+                        truncate
+                    "
+                >
+                    View all users
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="flex-auto p-6 sm:p-10">
+        <div
+            class="
+                max-w-full
+                bg-card
+                rounded-2xl
+                shadow
+                p-8
+                pb-4
+                overflow-y-auto
+            "
+        >
+        <div class="flex items-center mt-4 sm:mt-0 md:mt-4 ">
+            <div class="flex-auto mr-3">
+                <app-filter
+                *ngIf="showFilter"
+                [data]="topicsList"
+                [columns]="filterColummn"
+                (outputData)="GetFilteredData($event)"
+            ></app-filter>
+            </div>
+            
+            <div class="text-left">
+                <div class="flex justify-end">
+                    <button
+                        mat-flat-button
+                        [color]="'primary'"
+                        class="fuse-mat-button-large mb-2"
+                        (click)="exportExcel()"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:save'"
+                        ></mat-icon>
+                        <span class="ml-2">Download as Excel Sheet</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+            <table
+                class="overflow-y-visible w-full"
+                mat-table
+                [dataSource]="userDatalist"
+            >
+                <ng-container matColumnDef="firstName">
+                    <th mat-header-cell *matHeaderCellDef>First Name</th>
+                    <td mat-cell *matCellDef="let element" class="break-all">
+                        {{ element.firstName }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="lastName">
+                    <th mat-header-cell *matHeaderCellDef>Last Name</th>
+                    <td mat-cell *matCellDef="let element" class="break-all">
+                        {{ element.lastName }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef>Email</th>
+                    <td mat-cell *matCellDef="let element" class="break-all">
+                        {{ element.email }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="userType">
+                    <th mat-header-cell *matHeaderCellDef>User Type</th>
+                    <td mat-cell *matCellDef="let element" class="break-all">
+                        {{ element.userType }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="index">
+                    <th mat-header-cell *matHeaderCellDef>No.</th>
+                    <td mat-cell *matCellDef="let element" class="break-all">
+                        {{ element.index }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="key">
+                    <th
+                        mat-header-cell
+                        *matHeaderCellDef
+                        class="text-right"
+                        style="width: 10%"
+                    >
+                        Action
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let element"
+                        class="break-all text-right"
+                        style="width: 10%"
+                    >
+                        <mat-icon
+                            class="cursor-pointer"
+                            svgIcon="heroicons_outline:pencil-alt"
+                            (click)="editUser(element)"
+                        ></mat-icon>
+                        <mat-icon
+                            class="cursor-pointer"
+                            svgIcon="heroicons_outline:trash"
+                            (click)="deleteQuestions(element)"
+                        ></mat-icon>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                    mat-row
+                    *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+            </table>
+        </div>
+    </div>
+</div>

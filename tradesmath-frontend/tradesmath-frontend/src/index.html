@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Trades Math - Practice App</title>
+        <meta charset="utf-8" />
+        <meta name="description" content="Trades Math - Practice App" />
+        <meta
+            name="keywords"
+            content="Trades Math - Practice App, Math, Traders"
+        />
+
+        <meta
+            name="viewport"
+            content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"
+        />
+
+        <base href="/" />
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="assets/images/logo/logo.png" />
+        <link rel="icon" type="image/png" href="assets/images/logo/logo.png" />
+
+        <!-- Fonts -->
+        <link href="assets/fonts/inter/inter.css" rel="stylesheet" />
+
+        <link href="https://fonts.gstatic.com" rel="preconnect" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Icon fonts -->
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+
+        <!-- Splash screen styles -->
+        <link href="assets/styles/splash-screen.css" rel="stylesheet" />
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.min.js"
+            integrity="sha512-OZ6CXzl5JrSc9OM1lxp1OC+zt5gCTVAqy7nWwbdSUE98akAvGl/20WaIqsRUnSpBG+QBkcMkiJVfFvybZ6PtKQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+    </head>
+
+    <body>
+        <!-- Splash screen -->
+        <fuse-splash-screen>
+            <img src="assets/images/logo/logo-white.png" alt="Trades Math Logo" />
+            <div class="spinner">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+        </fuse-splash-screen>
+
+        <!-- App root -->
+        <app-root></app-root>
+    </body>
+
+    <script>
+        var getFromBetween = {
+            results: [],
+            string: "",
+            getFromBetween: function (sub1, sub2) {
+                if (
+                    this.string.indexOf(sub1) < 0 ||
+                    this.string.indexOf(sub2) < 0
+                )
+                    return false;
+                var SP = this.string.indexOf(sub1) + sub1.length;
+                var string1 = this.string.substr(0, SP);
+                var string2 = this.string.substr(SP);
+                var TP = string1.length + string2.indexOf(sub2);
+                return this.string.substring(SP, TP);
+            },
+            removeFromBetween: function (sub1, sub2) {
+                if (
+                    this.string.indexOf(sub1) < 0 ||
+                    this.string.indexOf(sub2) < 0
+                )
+                    return false;
+                var removal = sub1 + this.getFromBetween(sub1, sub2) + sub2;
+                this.string = this.string.replace(removal, "");
+            },
+            getAllResults: function (sub1, sub2) {
+                // first check to see if we do have both substrings
+                if (
+                    this.string.indexOf(sub1) < 0 ||
+                    this.string.indexOf(sub2) < 0
+                )
+                    return;
+
+                // find one result
+                var result = this.getFromBetween(sub1, sub2);
+                // push it to the results array
+                this.results.push(result);
+                // remove the most recently found one from the string
+                this.removeFromBetween(sub1, sub2);
+
+                // if there's more substrings
+                if (
+                    this.string.indexOf(sub1) > -1 &&
+                    this.string.indexOf(sub2) > -1
+                ) {
+                    this.getAllResults(sub1, sub2);
+                } else return;
+            },
+            get: function (string, sub1, sub2) {
+                this.results = [];
+                this.string = string;
+                this.getAllResults(sub1, sub2);
+                return this.results;
+            },
+        };
+    </script>
+</html>

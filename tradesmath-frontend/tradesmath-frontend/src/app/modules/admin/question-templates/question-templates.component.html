@@ -1,0 +1,182 @@
+<div class="flex flex-col flex-auto min-w-0 student-questions">
+    <div
+        class="
+            flex flex-col
+            sm:flex-row
+            flex-0
+            sm:items-center sm:justify-between
+            p-6
+            sm:py-8 sm:px-10
+            border-b
+            bg-card
+            dark:bg-transparent
+        "
+    >
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-primary-500">Admin</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_solid:chevron-right'"
+                    ></mat-icon>
+                    <a class="ml-1 text-primary-500">Question Templates</a>
+                </div>
+            </div>
+            <div class="mt-2" *ngIf="topicInfo">
+                <h2
+                    class="
+                        text-3xl
+                        md:text-4xl
+                        font-extrabold
+                        tracking-tight
+                        leading-7
+                        sm:leading-10
+                    "
+                >
+                    Topic: {{ topicInfo.topicName }}
+                </h2>
+                <a
+                    *ngIf="topicInfo"
+                    class="text-1xl text-primary-500"
+                    [href]="topicInfo.topicMaterial"
+                    target="_BLANK"
+                >
+                    Open Topic Material
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="max-w-6xl" *ngIf="questions.length > 0">
+            <form
+                class="p-4 bg-card shadow rounded overflow-hidden"
+                [formGroup]="questionAnswerForm"
+            >
+                <mat-horizontal-stepper #horizontalStepper>
+                    <mat-step
+                        *ngFor="let data of getGroups(); let i = index"
+                        [formGroupName]="data"
+                        [stepControl]="questionAnswerForm.get(data)"
+                    >
+                        <div class="flex flex-row">
+                            <div class="w-full">
+                                <p class="my-6 font-medium"></p>
+                                <div class="flex mb-3 items-center">
+                                    <div
+                                        class="ml-2"
+                                        [appMath]="
+                                            questionAnswerForm.get(data).value
+                                                .question
+                                        "
+                                    ></div>
+                                </div>
+                                <img
+                                    style="
+                                        width: 600px;
+                                        margin: 0 auto;
+                                        margin-bottom: 20px;
+                                    "
+                                    *ngIf="
+                                        questionAnswerForm.get(data).value.image
+                                    "
+                                    [src]="
+                                        questionAnswerForm.get(data).value.image
+                                            | safe
+                                    "
+                                />
+                                <div class="flex">
+                                    <mat-form-field class="flex-auto">
+                                        <input
+                                            matInput
+                                            [formControlName]="'answer'"
+                                            placeholder="Enter your answer (units are optional). Example: 3/4"
+                                        />
+                                        <mat-icon
+                                            class="cursor-pointer"
+                                            svgIcon="heroicons_solid:light-bulb"
+                                            (click)="openHint()"
+                                        ></mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <!-- <div>
+                                    <small *ngIf="isFraction">
+                                        Example : 2/3
+                                    </small>
+                                </div> -->
+                                <div class="flex mb-3 items-center">
+                                    <mat-icon
+                                        svgIcon="{{
+                                            questionAnswerForm.get(data).value
+                                                .showAnswer
+                                                ? 'heroicons_solid:eye-off'
+                                                : 'heroicons_solid:eye'
+                                        }}"
+                                        (click)="
+                                            toggleAnswer(
+                                                questionAnswerForm.get(data)
+                                            )
+                                        "
+                                    ></mat-icon>
+                                    <div class="ml-2">
+                                        {{
+                                            questionAnswerForm.get(data).value
+                                                .showAnswer
+                                                ? "Answer is " +
+                                                  questions[
+                                                      horizontalStepper
+                                                          .selectedIndex
+                                                  ].answer
+                                                : "Show Answer"
+                                        }}
+                                    </div>
+                                </div>
+                                <div class="flex justify-end">
+                                    <button
+                                        class="px-8 mr-2"
+                                        mat-flat-button
+                                        [color]="'accent'"
+                                        type="button"
+                                        [disabled]="i === 0"
+                                        matStepperPrevious
+                                    >
+                                        Back
+                                    </button>
+                                    <button
+                                        class="px-8"
+                                        mat-flat-button
+                                        [color]="'primary'"
+                                        type="submit"
+                                        matStepperNext
+                                        *ngIf="getGroups().length - 1 !== i"
+                                    >
+                                        Next
+                                    </button>
+                                    <button
+                                        class="px-8"
+                                        mat-flat-button
+                                        [color]="'primary'"
+                                        [type]="button"
+                                        (click)="onSubmit(questionAnswerForm)"
+                                        *ngIf="getGroups().length - 1 === i"
+                                    >
+                                        Reload Questions
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-step>
+                    <ng-template matStepperIcon="edit" let-index="index">
+                        {{ index + 1 }}
+                    </ng-template>
+                </mat-horizontal-stepper>
+            </form>
+        </div>
+        <div class="max-w-5xl" *ngIf="questions.length === 0">
+            <h2 class="text-center">No questions found!</h2>
+        </div>
+    </div>
+</div>
